@@ -12,6 +12,6 @@
 </div>
 
 <a href="https://git.io/streak-stats">
-<img height=200 align="center" src="https://github-readme-streak-stats.herokuapp.com?user=ZubBick&theme=blue-green />
+<img height=200 align="center" src="https://github-readme-streak-stats.herokuapp.com?user=ZubBick&theme=blue-green /> </img>
 
 </a>
