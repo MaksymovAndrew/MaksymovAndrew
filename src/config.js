@@ -90,6 +90,7 @@ export const LABELS = {
 };
 
 export const DESCRIPTIONS = {
+    profile: (titles) => titles.join(". "),
     terminal: (lines) => lines.map(({ output }) => output).join(" · "),
     stack: (names) => `Stack: ${names.join(", ")}`,
     cards: ({ stats, streak, language }) =>

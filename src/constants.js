@@ -8,15 +8,17 @@ const OUT_DIR = "dist";
 
 export const PATHS = {
     out: OUT_DIR,
-    block: (name, mode) => `${OUT_DIR}/${name}-${mode}.svg`,
+    profile: (mode) => `${OUT_DIR}/profile-${mode}.svg`,
     icon: (name) => new URL(`../icons/${name}.svg`, import.meta.url),
 };
 
-export const BLOCKS = {
-    terminal: "terminal",
-    stack: "stack",
-    cards: "cards",
-    activity: "activity",
+export const GAP = 12;
+
+export const SEQUENCE = {
+    terminal: 0,
+    stack: 0.5,
+    cards: 1.1,
+    activity: 1.7,
 };
 
 export const CANVAS = {
@@ -90,21 +92,18 @@ export const TERMINAL_MOTION = {
 };
 
 export const STACK_LAYOUT = {
-    gap: 8,
-    top: 4,
     tileRadius: 9,
     iconScale: 0.52,
-    start: 0.15,
     stagger: 0.05,
 };
 
 export const CARDS_LAYOUT = {
-    gap: 12,
     height: 204,
-    pad: 18,
+    pad: 20,
     headingY: 32,
     cardStagger: 0.12,
     slots: { stats: 0, streak: 1, languages: 2 },
+    reveal: 0.5,
     stats: { firstRow: 66, rowHeight: 27, labelX: 42, glyphRise: 11, start: 0.35, stagger: 0.08, countLead: 0.1 },
     ring: { radius: 40, y: 98, stroke: 6, min: 0.04, figureDrop: 10, countStart: 0.45, rotation: -90 },
     streakCaption: { nowY: 166, rangeY: 185 },
@@ -115,9 +114,8 @@ export const CARDS_LAYOUT = {
 export const ACTIVITY_LAYOUT = {
     header: 48,
     headingY: 32,
-    bottom: 18,
-    side: 20,
-    grid: { cell: 11, step: 14, top: 8, radius: 2 },
+    pad: 20,
+    grid: { gap: 3, radius: 2 },
 };
 
 export const SNAKE_MOTION = {

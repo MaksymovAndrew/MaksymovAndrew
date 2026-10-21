@@ -1,12 +1,9 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 
-import { activity } from "./blocks/activity.js";
-import { cards } from "./blocks/cards.js";
-import { stack } from "./blocks/stack.js";
-import { terminal } from "./blocks/terminal.js";
 import { THEMES } from "./config.js";
-import { BLOCKS, DATA_FLAG, ENCODING, PATHS, TOKEN_ENV } from "./constants.js";
+import { DATA_FLAG, ENCODING, PATHS, TOKEN_ENV } from "./constants.js";
 import { fetchStats } from "./github.js";
+import { profile } from "./profile.js";
 
 async function loadStats() {
     const dataIndex = process.argv.indexOf(DATA_FLAG);
@@ -18,25 +15,13 @@ async function loadStats() {
     return fetchStats(token);
 }
 
-async function renderTheme(theme, stats) {
-    return {
-        [BLOCKS.terminal]: terminal(theme),
-        [BLOCKS.stack]: await stack(theme),
-        [BLOCKS.cards]: cards(theme, stats),
-        [BLOCKS.activity]: activity(theme, stats),
-    };
-}
-
 async function build() {
     const stats = await loadStats();
     await mkdir(PATHS.out, { recursive: true });
     for (const [mode, theme] of Object.entries(THEMES)) {
-        const blocks = await renderTheme(theme, stats);
-        for (const [name, content] of Object.entries(blocks)) {
-            await writeFile(PATHS.block(name, mode), content);
-        }
+        await writeFile(PATHS.profile(mode), await profile(theme, stats));
     }
-    console.log(`Cards written to ${PATHS.out}/`);
+    console.log(`Profile written to ${PATHS.out}/`);
 }
 
 await build();

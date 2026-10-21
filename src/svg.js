@@ -4,6 +4,8 @@ import { BASE, REDUCED_MOTION } from "./styles.js";
 export const escapeXml = (text) =>
     String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+export const fixed = (value) => value.toFixed(PRECISION.geometry);
+
 const seconds = (value) => `${value.toFixed(PRECISION.time)}s`;
 
 export const delayed = (delay) => `style="animation-delay:${seconds(delay)}"`;

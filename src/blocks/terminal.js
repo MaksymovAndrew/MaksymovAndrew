@@ -1,7 +1,7 @@
 import { DESCRIPTIONS, TERMINAL } from "../config.js";
 import { CANVAS, NBSP, SPACE_RUN, TERMINAL_LAYOUT as LAYOUT, TERMINAL_MOTION as MOTION, TYPE } from "../constants.js";
 import { BLINK } from "../styles.js";
-import { delayed, escapeXml, panel, svgDocument } from "../svg.js";
+import { delayed, escapeXml, panel } from "../svg.js";
 
 const FIRST_LINE = LAYOUT.barHeight + LAYOUT.firstLineOffset;
 
@@ -29,9 +29,9 @@ function cursorLine(theme, y, time) {
     return `<g class="p-fade" ${delayed(time)}>${prompt}${block}</g>`;
 }
 
-function session(theme) {
+function session(theme, start) {
     let y = FIRST_LINE;
-    let time = MOTION.start;
+    let time = start + MOTION.start;
     const lines = [];
     for (const line of TERMINAL.lines) {
         lines.push(commandLine(theme, line.command, y, time));
@@ -61,14 +61,14 @@ function titleBar(theme) {
     return shape + line + dots + title;
 }
 
-export function terminal(theme) {
+export function terminal(theme, start) {
     const rows = TERMINAL.lines.length * LAYOUT.linesPerEntry + 1;
     const height = FIRST_LINE + (rows - 1) * LAYOUT.lineHeight + LAYOUT.padBottom;
     const frame = panel({ width: CANVAS.width, height, fill: theme.bg, stroke: theme.line });
-    return svgDocument({
+    return {
         height,
         title: DESCRIPTIONS.terminal(TERMINAL.lines),
         style: BLINK,
-        body: `<g class="p-rise">\n${frame}\n${titleBar(theme)}\n${session(theme)}\n</g>`,
-    });
+        body: `<g class="p-rise" ${delayed(start)}>\n${frame}\n${titleBar(theme)}\n${session(theme, start)}\n</g>`,
+    };
 }

@@ -3,10 +3,10 @@ import { mixColor } from "../color.js";
 import { ACTIVITY_LAYOUT as LAYOUT, CANVAS, PERCENT, PRECISION, SNAKE_MOTION as MOTION, STATS_RULES, TYPE } from "../constants.js";
 import { contributionLevel, toUtcDate } from "../stats.js";
 import { snake } from "../styles.js";
-import { escapeXml, panel, svgDocument } from "../svg.js";
+import { delayed, escapeXml, fixed, panel } from "../svg.js";
 
 const { grid } = LAYOUT;
-const GRID_HEIGHT = STATS_RULES.daysPerWeek * grid.step;
+const CONTENT_WIDTH = CANVAS.width - LAYOUT.pad * 2;
 
 function placeDays(days) {
     const { daysPerWeek } = STATS_RULES;
@@ -32,41 +32,46 @@ function keyframes(name, { origin, empty, tail, start, cycle }) {
     return `@keyframes ${name}{0%{fill:${origin}}${passing.join("")}${eaten}100%{fill:${origin}}}`;
 }
 
-function animatedGrid(theme, days) {
-    const path = snakePath(placeDays(days));
+function animatedGrid(theme, path, start) {
     const weeks = path.at(-1).week + 1;
-    const left = (CANVAS.width - weeks * grid.step + (grid.step - grid.cell)) / 2;
+    const step = (CONTENT_WIDTH + grid.gap) / weeks;
+    const cell = step - grid.gap;
     const empty = theme.levels[0];
     const tail = MOTION.tail.map((strength) => mixColor(theme.glow, empty, strength));
     const cycle = (path.length + tail.length) * MOTION.step + MOTION.hold;
 
     const frames = [];
-    const cells = path.map((cell, index) => {
+    const cells = path.map((day, index) => {
         const name = `s${index}`;
-        const origin = theme.levels[cell.level];
+        const origin = theme.levels[day.level];
         frames.push(keyframes(name, { origin, empty, tail, start: index * MOTION.step, cycle }));
-        const x = left + cell.week * grid.step;
-        const y = LAYOUT.header + grid.top + cell.weekday * grid.step;
-        return `<rect class="p-snake" x="${x}" y="${y}" width="${grid.cell}" height="${grid.cell}" rx="${grid.radius}" fill="${origin}" style="animation-name:${name}"/>`;
+        const x = fixed(LAYOUT.pad + day.week * step);
+        const y = fixed(LAYOUT.header + day.weekday * step);
+        return `<rect class="p-snake" x="${x}" y="${y}" width="${fixed(cell)}" height="${fixed(cell)}" rx="${grid.radius}" fill="${origin}" style="animation-name:${name}"/>`;
     });
-    const style = `${snake({ duration: cycle.toFixed(PRECISION.time), delay: MOTION.start })}\n${frames.join("\n")}`;
-    return { content: cells.join(""), style };
+    const timing = snake({ duration: cycle.toFixed(PRECISION.time), delay: start + MOTION.start });
+    return {
+        content: cells.join(""),
+        style: `${timing}\n${frames.join("\n")}`,
+        gridHeight: STATS_RULES.daysPerWeek * step - grid.gap,
+    };
 }
 
 function header(theme, total) {
-    const title = `<text x="${LAYOUT.side}" y="${LAYOUT.headingY}" font-size="${TYPE.heading}" fill="${theme.accent}">${escapeXml(LABELS.activity)}</text>`;
-    const count = `<text x="${CANVAS.width - LAYOUT.side}" y="${LAYOUT.headingY}" font-size="${TYPE.caption}" text-anchor="end" fill="${theme.muted}">${total} ${escapeXml(LABELS.activityTotal)}</text>`;
+    const title = `<text x="${LAYOUT.pad}" y="${LAYOUT.headingY}" font-size="${TYPE.heading}" fill="${theme.accent}">${escapeXml(LABELS.activity)}</text>`;
+    const count = `<text x="${CANVAS.width - LAYOUT.pad}" y="${LAYOUT.headingY}" font-size="${TYPE.caption}" text-anchor="end" fill="${theme.muted}">${total} ${escapeXml(LABELS.activityTotal)}</text>`;
     return title + count;
 }
 
-export function activity(theme, stats) {
-    const { content, style } = animatedGrid(theme, stats.days);
-    const height = LAYOUT.header + grid.top + GRID_HEIGHT + LAYOUT.bottom;
+export function activity(theme, stats, start) {
+    const path = snakePath(placeDays(stats.days));
+    const { content, style, gridHeight } = animatedGrid(theme, path, start);
+    const height = Math.ceil(LAYOUT.header + gridHeight + LAYOUT.pad);
     const frame = panel({ width: CANVAS.width, height, fill: theme.surface, stroke: theme.line });
-    return svgDocument({
+    return {
         height,
         title: DESCRIPTIONS.activity(stats.contributions),
         style,
-        body: `<g class="p-rise">${frame}\n${header(theme, stats.contributions)}\n${content}</g>`,
-    });
+        body: `<g class="p-rise" ${delayed(start)}>${frame}\n${header(theme, stats.contributions)}\n${content}</g>`,
+    };
 }
