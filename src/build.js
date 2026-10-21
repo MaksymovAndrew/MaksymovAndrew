@@ -18,12 +18,12 @@ async function loadStats() {
     return fetchStats(token);
 }
 
-async function renderTheme(mode, theme, stats) {
+async function renderTheme(theme, stats) {
     return {
         [BLOCKS.terminal]: terminal(theme),
         [BLOCKS.stack]: await stack(theme),
         [BLOCKS.cards]: cards(theme, stats),
-        [BLOCKS.activity]: await activity(theme, stats, PATHS.snake(mode)),
+        [BLOCKS.activity]: activity(theme, stats),
     };
 }
 
@@ -31,7 +31,7 @@ async function build() {
     const stats = await loadStats();
     await mkdir(PATHS.out, { recursive: true });
     for (const [mode, theme] of Object.entries(THEMES)) {
-        const blocks = await renderTheme(mode, theme, stats);
+        const blocks = await renderTheme(theme, stats);
         for (const [name, content] of Object.entries(blocks)) {
             await writeFile(PATHS.block(name, mode), content);
         }

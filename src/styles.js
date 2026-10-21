@@ -21,4 +21,7 @@ export const RING = `.p-ring{animation:p-ring 1.4s ${EASE} ${REVEAL_DELAY} both}
 
 export const GROW = `.p-grow{transform-box:fill-box;transform-origin:left;animation:p-grow .9s ${EASE} ${REVEAL_DELAY} both}@keyframes p-grow{from{transform:scaleX(0)}}`;
 
+export const snake = ({ duration, delay }) =>
+    `.p-snake{animation-duration:${duration}s;animation-delay:${delay}s;animation-timing-function:step-end;animation-iteration-count:infinite;animation-fill-mode:backwards}`;
+
 export const REDUCED_MOTION = "@media (prefers-reduced-motion:reduce){*{animation:none!important}}";

@@ -9,7 +9,6 @@ const OUT_DIR = "dist";
 export const PATHS = {
     out: OUT_DIR,
     block: (name, mode) => `${OUT_DIR}/${name}-${mode}.svg`,
-    snake: (mode) => `${OUT_DIR}/snake-${mode}.svg`,
     icon: (name) => new URL(`../icons/${name}.svg`, import.meta.url),
 };
 
@@ -18,13 +17,6 @@ export const BLOCKS = {
     stack: "stack",
     cards: "cards",
     activity: "activity",
-};
-
-export const SNAKE_OUTPUT = {
-    name: "outputs",
-    delimiter: "SNAKE_OUTPUTS_EOF",
-    snakeParam: "color_snake",
-    dotsParam: "color_dots",
 };
 
 export const CANVAS = {
@@ -47,6 +39,7 @@ export const PRECISION = {
     share: 1,
     geometry: 1,
     time: 2,
+    keyframe: 3,
 };
 
 export const PERCENT = 100;
@@ -125,4 +118,11 @@ export const ACTIVITY_LAYOUT = {
     bottom: 18,
     side: 20,
     grid: { cell: 11, step: 14, top: 8, radius: 2 },
+};
+
+export const SNAKE_MOTION = {
+    start: 0.8,
+    step: 0.028,
+    hold: 1.2,
+    tail: [100, 76, 62, 48, 34, 20],
 };

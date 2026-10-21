@@ -7,7 +7,6 @@
     },
     "scripts": {
         "build": "node src/build.js",
-        "preview": "node src/build.js --data fixture.json",
-        "snake-outputs": "node src/snake-outputs.js"
+        "preview": "node src/build.js --data fixture.json"
     }
 }

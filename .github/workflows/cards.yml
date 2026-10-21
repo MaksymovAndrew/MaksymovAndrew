@@ -20,17 +20,6 @@ jobs:
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-            - name: Read snake palette
-              id: palette
-              run: npm run --silent snake-outputs >> "$GITHUB_OUTPUT"
-
-            - name: Generate snake
-              uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3.5.0
-              with:
-                  github_user_name: ${{ github.repository_owner }}
-                  github_token: ${{ secrets.STATS_TOKEN || github.token }}
-                  outputs: ${{ steps.palette.outputs.outputs }}
-
             - name: Generate cards
               run: npm run build
               env:
