@@ -1,0 +1,47 @@
+name: Cards
+
+on:
+    schedule:
+        - cron: "17 3 * * *"
+    workflow_dispatch:
+    push:
+        branches: [main]
+
+permissions:
+    contents: write
+
+concurrency:
+    group: cards
+    cancel-in-progress: false
+
+jobs:
+    cards:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+            - name: Read snake palette
+              id: palette
+              run: npm run --silent snake-outputs >> "$GITHUB_OUTPUT"
+
+            - name: Generate snake
+              uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3.5.0
+              with:
+                  github_user_name: ${{ github.repository_owner }}
+                  github_token: ${{ secrets.STATS_TOKEN || github.token }}
+                  outputs: ${{ steps.palette.outputs.outputs }}
+
+            - name: Generate cards
+              run: npm run build
+              env:
+                  GITHUB_TOKEN: ${{ secrets.STATS_TOKEN || github.token }}
+
+            - name: Publish to the output branch
+              working-directory: dist
+              env:
+                  PUSH_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+              run: |
+                  git init --quiet --initial-branch output
+                  git add .
+                  git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit --quiet --message "chore: update profile cards"
+                  git push --quiet --force "$PUSH_URL" output

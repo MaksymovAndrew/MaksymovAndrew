@@ -1,16 +1,21 @@
-### Languages and Tools
-<div>
-  <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" title="React" alt="React" width="40" height="40"/>&nbsp;
-  <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="JavaScript" width="40" height="40"/>&nbsp;
-  <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-plain-wordmark.svg"  title="CSS3" alt="CSS" width="40" height="40"/>&nbsp;
-  <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML" width="40" height="40"/>&nbsp;
-  <img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-plain.svg" title="NodeJS" alt="NodeJS" width="40" height="40"/>&nbsp;
-  <img src="https://github.com/devicons/devicon/blob/master/icons/npm/npm-original-wordmark.svg" title="npm" alt="npm" width="40" height="40"/>&nbsp; 
-  <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original-wordmark.svg" title="Git" **alt="Git" width="40" height="40"/>
-  <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original-wordmark.svg" title="Python" **alt="Python" width="40" height="40"/>
-  <img src="https://github.com/devicons/devicon/blob/master/icons/vscode/vscode-original.svg" title="C#"  alt="C#" width="40" height="40"/>&nbsp;  
-</div>
+<a href="https://andrii-maksymov.tech">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/MaksymovAndrew/MaksymovAndrew/output/terminal-dark.svg">
+        <img alt="Andrii Maksymov, frontend developer. Portfolio: andrii-maksymov.tech" src="https://raw.githubusercontent.com/MaksymovAndrew/MaksymovAndrew/output/terminal-light.svg" width="100%">
+    </picture>
+</a>
 
-### Statistics:
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/MaksymovAndrew/MaksymovAndrew/output/stack-dark.svg">
+    <img alt="Stack: JavaScript, TypeScript, React, Next.js, Redux, SCSS, Tailwind CSS, Vite, Storybook, Jest, Playwright, Node.js, PostgreSQL, Docker, GitHub Actions, Figma" src="https://raw.githubusercontent.com/MaksymovAndrew/MaksymovAndrew/output/stack-light.svg" width="100%">
+</picture>
 
-<a href="https://git.io/streak-stats"><img height=200 align="center" src="https://github-readme-streak-stats.herokuapp.com?user=MaksymovAndrew&theme=blue-green" alt="GitHub Streak" /></a>
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/MaksymovAndrew/MaksymovAndrew/output/cards-dark.svg">
+    <img alt="GitHub stats, contribution streak and top languages" src="https://raw.githubusercontent.com/MaksymovAndrew/MaksymovAndrew/output/cards-light.svg" width="100%">
+</picture>
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/MaksymovAndrew/MaksymovAndrew/output/activity-dark.svg">
+    <img alt="Contribution snake" src="https://raw.githubusercontent.com/MaksymovAndrew/MaksymovAndrew/output/activity-light.svg" width="100%">
+</picture>

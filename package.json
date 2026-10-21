@@ -1,0 +1,13 @@
+{
+    "name": "profile-cards",
+    "private": true,
+    "type": "module",
+    "engines": {
+        "node": ">=20"
+    },
+    "scripts": {
+        "build": "node src/build.js",
+        "preview": "node src/build.js --data fixture.json",
+        "snake-outputs": "node src/snake-outputs.js"
+    }
+}
